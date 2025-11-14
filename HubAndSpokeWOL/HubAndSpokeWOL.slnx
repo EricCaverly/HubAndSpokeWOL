@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WOL/WOL.csproj" />
+  <Project Path="WOLRunner/WOLRunner.csproj" />
+</Solution>
