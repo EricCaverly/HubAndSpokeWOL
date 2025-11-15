@@ -4,8 +4,6 @@ using System.Net.Sockets;
 
 namespace WOL;
 
-public record JSONPacket(string BroadcastAddress, string MACAddress);
-
 public class Packet {
     const int c_wolPort = 9;
     const int c_headerLenth = 6;
@@ -24,32 +22,6 @@ public class Packet {
     public Packet(IPAddress targetBroadcastNetwork, PhysicalAddress macAddress) {
         BroadcastAddress = targetBroadcastNetwork;
         MACAddress = macAddress;
-    }
-
-    /// <summary>
-    /// Constructor when receiving JSON data
-    /// </summary>
-    /// <param name="p"></param>
-    public Packet(JSONPacket p) {
-        if(!IPAddress.TryParse(p.BroadcastAddress, out IPAddress? bcAddr)) {
-            throw new ArgumentException("invalid broadcast address");
-        }
-        if(!PhysicalAddress.TryParse(p.MACAddress, out PhysicalAddress? macAddr)) {
-            throw new ArgumentException("invalid mac address");
-        }
-
-        BroadcastAddress = bcAddr;
-        MACAddress = macAddr;
-    }
-
-
-    /// <summary>
-    /// Propery that is useful for JSON serialization
-    /// </summary>
-    public JSONPacket JSON {
-        get {
-            return new JSONPacket(BroadcastAddress.ToString(), MACAddress.ToString());
-        }
     }
 
     
